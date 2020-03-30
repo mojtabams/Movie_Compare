@@ -29,12 +29,20 @@ const content = document.querySelector(".dropdown-content");
 
 const onInput = async event => {
     const movies = await fetchData(event.target.value);
+
+    if (!movies.length){
+        dropdown.classList.remove('is-active');
+        return ;
+    }
+
+    content.innerHTML = ``;
     dropdown.classList.add('is-active');
     for (let movie of movies) {
         const div = document.createElement('div');
+        const imgSrc = movie.Poster === 'N/A' ? '' : movie.Poster;
         div.innerHTML = `  
             <a href="#" class="dropdown-item">
-            <img src="${movie.Poster}" />
+            <img src="${imgSrc}" />
             ${movie.Title}
             </a>            
             `;
@@ -43,3 +51,13 @@ const onInput = async event => {
 };
 
 input.addEventListener('input', debounce(onInput, 500));
+document.addEventListener('click', event => {
+    if (!container.contains(event.target)){
+        dropdown.classList.remove('is-active');
+    }
+});
+input.addEventListener('click', event => {
+    if (container.contains(event.target)){
+        dropdown.classList.add('is-active');
+    }
+});
