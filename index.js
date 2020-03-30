@@ -17,25 +17,28 @@ container.innerHTML = `
     <label><b>Search For a Movie</b></label>
     <input class="input">
     <div class="dropdown">
-        <div class="dropdown-menu">
-          <div class="dropdown-content results"></div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+    <div class="dropdown-content">
+    
         </div>
       </div>
 `
 const input = document.querySelector("input");
 const dropdown = document.querySelector(".dropdown");
-const results = document.querySelector(".results");
+const content = document.querySelector(".dropdown-content");
 
 const onInput = async event => {
     const movies = await fetchData(event.target.value);
     dropdown.classList.add('is-active');
     for (let movie of movies) {
         const div = document.createElement('div');
-        div.innerHTML = `
+        div.innerHTML = `  
+            <a href="#" class="dropdown-item">
             <img src="${movie.Poster}" />
-            <h1>${movie.Title}</h1>
+            ${movie.Title}
+            </a>            
             `;
-        results.appendChild(div);
+        content.appendChild(div);
     }
 };
 
