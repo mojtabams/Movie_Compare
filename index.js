@@ -30,9 +30,9 @@ const content = document.querySelector(".dropdown-content");
 const onInput = async event => {
     const movies = await fetchData(event.target.value);
 
-    if (!movies.length){
+    if (!movies.length) {
         dropdown.classList.remove('is-active');
-        return ;
+        return;
     }
 
     content.innerHTML = ``;
@@ -52,12 +52,13 @@ const onInput = async event => {
 
 input.addEventListener('input', debounce(onInput, 500));
 document.addEventListener('click', event => {
-    if (!container.contains(event.target)){
+    if (!container.contains(event.target)) {
         dropdown.classList.remove('is-active');
     }
 });
 input.addEventListener('click', event => {
-    if (container.contains(event.target)){
+    if (input.value.length > 0) {
         dropdown.classList.add('is-active');
     }
-});
+})
+;
